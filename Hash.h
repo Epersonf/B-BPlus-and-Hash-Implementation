@@ -24,15 +24,10 @@ int getIndex(THash* hash_obj, int key, int offset) {
     return (key + offset) % hash_obj->amount;
 }
 
-
 int hashFunction_aux(THash* hash_obj, int key, int offset, int add, int firstLoop) {
     int index = getIndex(hash_obj, key, offset);
 
-    if (!firstLoop && getIndex(hash_obj, key, 0) == index) {
-        return -1;
-    } else {
-        firstLoop = 0;
-    }
+    if (!firstLoop && getIndex(hash_obj, key, 0) == index) return -1;
 
     if (add) {
         if (hash_obj->obj_list[index] != NULL) {
