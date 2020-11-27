@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1606489711 source:e:\documents\codeblocksprojects\b-b+-hash\main.c
+	<stdio.h>
+	<stdlib.h>
+	"Hash.h"
+
+1606490784 e:\documents\codeblocksprojects\b-b+-hash\hash.h
+
