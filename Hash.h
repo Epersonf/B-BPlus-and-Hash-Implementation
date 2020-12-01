@@ -1,10 +1,12 @@
 typedef struct object {
     int key;
+    int amt;
 } TObject;
 
 TObject* hash_create_obj(int key) {
     TObject* object = malloc(sizeof(TObject));
     object->key = key;
+    object->amt = 0;
     return object;
 }
 
@@ -16,37 +18,42 @@ typedef struct hash_struct {
 THash* hash_create(int amount) {
     THash* toReturn = malloc(sizeof(THash));
     toReturn->amount = amount;
-    toReturn->obj_list = calloc(sizeof(TObject*), amount);
+    if (amount % 2 == 0) toReturn->amount++;
+    toReturn->obj_list = calloc(sizeof(TObject*), toReturn->amount);
     return toReturn;
 }
 
-int getIndex(THash* hash_obj, int key, int offset) {
-    return (key + offset) % hash_obj->amount;
+int getIndexLinear(THash* hash_obj, int key, int offset) {
+    return ((key % hash_obj->amount) + offset) % hash_obj->amount;
 }
 
-int hashFunction_aux(THash* hash_obj, int key, int offset, int add, int firstLoop) {
-    int index = getIndex(hash_obj, key, offset);
+int getIndexQuadratic(THash* hash_obj, int key, int offset) {
+    return ((key % hash_obj->amount) + offset * offset) % hash_obj->amount;
+}
 
-    if (!firstLoop && getIndex(hash_obj, key, 0) == index) return -1;
+int hashFunction_aux(THash* hash_obj, int key, int offset, int add) {
+    int index = getIndexQuadratic(hash_obj, key, offset);
+
+    if (offset == hash_obj->amount) return -1;
 
     if (add) {
         if (hash_obj->obj_list[index] != NULL) {
             if (hash_obj->obj_list[index]->key == key) return -1;
-            return hashFunction_aux(hash_obj, key, offset + 1, add, 0);
+            return hashFunction_aux(hash_obj, key, offset + 1, add);
         }
     } else {
         if (hash_obj->obj_list[index] != NULL) {
             if (hash_obj->obj_list[index]->key != key)
-                return hashFunction_aux(hash_obj, key, offset + 1, add, 0);
+                return hashFunction_aux(hash_obj, key, offset + 1, add);
         } else if (hash_obj->obj_list[index] == NULL)
-                return hashFunction_aux(hash_obj, key, offset + 1, add, 0);
+                return hashFunction_aux(hash_obj, key, offset + 1, add);
     }
 
     return index;
 }
 
 int hashFunction(THash* hash_obj, int key, int add) {
-    return hashFunction_aux(hash_obj, key, 0, add, 1);
+    return hashFunction_aux(hash_obj, key, 0, add);
 }
 
 void hash_add(THash* hash_obj, TObject* obj) {

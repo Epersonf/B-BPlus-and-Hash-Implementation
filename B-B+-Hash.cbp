@@ -32,6 +32,18 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="Hash.h" />
+		<Unit filename="HashProf/TH.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="HashProf/TH.h" />
+		<Unit filename="HashProf/TH_ENCAD.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="HashProf/TH_ENCAD.h" />
+		<Unit filename="HashProf/TH_ENCAD_EXT.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="HashProf/TH_ENCAD_EXT.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
