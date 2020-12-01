@@ -4,7 +4,7 @@
 
 int main()
 {
-    THash* hash_1 = hash_create(10);
+    THash* hash_1 = hash_create(23);
 
     hash_add(hash_1, hash_create_obj(10));
     hash_add(hash_1, hash_create_obj(20));

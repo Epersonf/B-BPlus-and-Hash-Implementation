@@ -76,6 +76,7 @@ TObject* hash_get(THash* hash_obj, int key) {
 
 void hash_print(THash* hash_obj) {
     for (int i = 0; i < hash_obj->amount; i++) {
+        printf("%d - ", i);
         if (hash_obj->obj_list[i] == NULL) {
             printf("-> NULL\n");
             continue;
